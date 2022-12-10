@@ -1,3 +1,5 @@
+package util
+
 fun <T> List<T>.partitionBy(condition: (T) -> Boolean) = partitionBy(condition) { it }
 fun <T, R> List<T>.partitionBy(condition: (T) -> Boolean, valueConverter: (T) -> R): List<List<R>> {
     return buildList {

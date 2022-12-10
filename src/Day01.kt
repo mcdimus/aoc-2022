@@ -1,3 +1,6 @@
+import util.partitionBy
+import util.readInput
+
 fun main() {
     fun part1(input: List<String>) = input
         .partitionBy(condition = String::isBlank, valueConverter = String::toInt)

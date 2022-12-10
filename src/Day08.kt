@@ -1,11 +1,17 @@
+import util.cartesian.grid.DataGrid
+import util.cartesian.grid.MutableDataGrid
+import util.cartesian.point.DataPoint
+import util.cartesian.point.MutableDataPoint
+import util.readInput
+
 @OptIn(ExperimentalStdlibApi::class)
 fun main() {
     fun part1(input: List<String>): Int {
-        val grid = IntGrid(input)
+        val grid = DataGrid.of(input) { it.digitToInt() }
         val pointsToConsider = ArrayDeque(grid.toList())
 
         var visibleCount = 0
-        var currentPoint: MutableDataPoint<Int>
+        var currentPoint: DataPoint<Int>
         while (pointsToConsider.isNotEmpty()) {
             currentPoint = pointsToConsider.removeFirst()
             if (grid.isOnTheEdge(currentPoint)) {
@@ -13,22 +19,22 @@ fun main() {
                 continue
             }
             val pointsOnTheLeft = (0..<currentPoint.x).reversed().map { x -> grid.get(x, currentPoint.y) }
-            if (pointsOnTheLeft.all { it!!.data < currentPoint.data }) {
+            if (pointsOnTheLeft.all { it.data < currentPoint.data }) {
                 visibleCount++
                 continue
             }
             val pointsOnTheRight = (currentPoint.x + 1..<grid.width).map { x -> grid.get(x, currentPoint.y) }
-            if (pointsOnTheRight.all { it!!.data < currentPoint.data }) {
+            if (pointsOnTheRight.all { it.data < currentPoint.data }) {
                 visibleCount++
                 continue
             }
             val pointsOnTheUp = (0..<currentPoint.y).reversed().map { y -> grid.get(currentPoint.x, y) }
-            if (pointsOnTheUp.all { it!!.data < currentPoint.data }) {
+            if (pointsOnTheUp.all { it.data < currentPoint.data }) {
                 visibleCount++
                 continue
             }
-            val pointsOnTheDown = (currentPoint.y + 1..<grid.height).map { y -> grid.get(currentPoint.x, y) }
-            if (pointsOnTheDown.all { it!!.data < currentPoint.data }) {
+            val pointsOnTheDown = (currentPoint.y + 1..<grid.getHeight()).map { y -> grid.get(currentPoint.x, y) }
+            if (pointsOnTheDown.all { it.data < currentPoint.data }) {
                 visibleCount++
                 continue
             }
@@ -38,7 +44,7 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        val grid = IntGrid(input)
+        val grid = MutableDataGrid.of(input) { it.digitToInt() }
         val pointsToConsider = ArrayDeque(grid.toList())
 
         var largestScenicScore = Int.MIN_VALUE
@@ -51,7 +57,7 @@ fun main() {
             val pointsOnTheLeft = (0..<currentPoint.x).reversed().map { x -> grid.get(x, currentPoint.y) }
             var leftScore = 0
             for (point in pointsOnTheLeft) {
-                if (point!!.data < currentPoint.data) {
+                if (point.data < currentPoint.data) {
                     leftScore++
                 } else {
                     leftScore++
@@ -62,7 +68,7 @@ fun main() {
             val pointsOnTheRight = (currentPoint.x + 1..<grid.width).map { x -> grid.get(x, currentPoint.y) }
             var rightScore = 0
             for (point in pointsOnTheRight) {
-                if (point!!.data < currentPoint.data) {
+                if (point.data < currentPoint.data) {
                     rightScore++
                 } else {
                     rightScore++
@@ -72,17 +78,17 @@ fun main() {
             val pointsOnTheUp = (0..<currentPoint.y).reversed().map { y -> grid.get(currentPoint.x, y) }
             var upScore = 0
             for (point in pointsOnTheUp) {
-                if (point!!.data < currentPoint.data) {
+                if (point.data < currentPoint.data) {
                     upScore++
                 } else {
                     upScore++
                     break
                 }
             }
-            val pointsOnTheDown = (currentPoint.y + 1..<grid.height).map { y -> grid.get(currentPoint.x, y) }
+            val pointsOnTheDown = (currentPoint.y + 1..<grid.getHeight()).map { y -> grid.get(currentPoint.x, y) }
             var downScore = 0
             for (point in pointsOnTheDown) {
-                if (point!!.data < currentPoint.data) {
+                if (point.data < currentPoint.data) {
                     downScore++
                 } else {
                     downScore++

@@ -1,3 +1,5 @@
+import util.readInput
+
 @OptIn(ExperimentalStdlibApi::class)
 fun main() {
     fun part1(input: List<String>): String {

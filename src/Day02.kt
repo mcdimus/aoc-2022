@@ -1,3 +1,5 @@
+import util.readInput
+
 fun main() {
     fun part1(input: List<String>) = input.asSequence()
         .map { it.split(' ') }
