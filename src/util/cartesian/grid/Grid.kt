@@ -24,7 +24,7 @@ interface Grid<T : Point<*>, SELF : Grid<T, SELF>> : Iterable<T> {
     fun getSurroundingPoints(x: Int, y: Int) = getAdjacentPoints(x = x, y = y) +
             DiagonalDirection.values().mapNotNull { getOrNull(x = x + it.deltaX, y = y + it.deltaY) }
 
-    fun isOnTheEdge(point: Point<*>) =
+    fun isOnTheEdge(point: T) =
         point.x == 0 || point.x == width - 1
                 || point.y == 0 || point.y == getHeight() - 1
 }
